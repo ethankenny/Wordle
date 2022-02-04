@@ -13,8 +13,12 @@ namespace Wordle
 {
     public partial class Form1 : Form
     {
-        string word = "FIVES";
+        string word = "ACUTE";
         int tries = 0;
+
+        List<char> letters = new List<char>{ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                                                 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+
         public Form1()
         {
             InitializeComponent();
@@ -44,17 +48,27 @@ namespace Wordle
             Label[] labels = {allLabels[tries,0], allLabels[tries,1], allLabels[tries,2], allLabels[tries,3], allLabels[tries,4]};
 
             TextBox currentTb = textboxes[tries];
-
             string guess = currentTb.Text;
-            label2.Text = "";
+
+            lblMessage.Text = "";
 
             if (guess.Length != 5)
             {
-                label2.Text = "Warning: Word must be 5 letters!";
+                lblMessage.Text = "Warning: Word must be 5 letters!";
                 this.ActiveControl = currentTb;
             }
             else
             {
+                foreach (char c in guess)
+                {
+                    letters.Remove(c);
+                }
+                lblLetters.Text = "Available Letters: ";
+                foreach (char c in letters)
+                {
+                    lblLetters.Text += c + " ";
+                }
+
                 tries++;
                 for (int i = 0; i < 5; i++)
                 {
@@ -74,11 +88,11 @@ namespace Wordle
                 }
                 if (guess == word)
                 {
-                    label2.Text = "Congratulations! You got it in " + tries + " guesses!";
+                    lblMessage.Text = "Congratulations! You got it in " + tries + " guesses!";
                     btnSubmit.Enabled = false;
                 } else if (tries == 6)
                 {
-                    label2.Text = "Sorry, the word was " + word + ".";
+                    lblMessage.Text = "Sorry, the word was " + word + ".";
                     btnSubmit.Enabled = false;
                 } else
                 {
