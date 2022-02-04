@@ -13,7 +13,7 @@ namespace Wordle
 {
     public partial class Form1 : Form
     {
-        string word = "PENIS";
+        string word = "FIVES";
         int tries = 0;
         public Form1()
         {
